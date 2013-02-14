@@ -1,0 +1,56 @@
+Why waste resources with css resets?
+
+Css resets are like a mandatory entry-point in every stylesheet we write.
+There are plenty of css resets, normalizer and boilerplates that should help you with having a more
+consisent rendering result across browsers.
+
+But, in a nutshell, what's the main role of a css reset?
+
+Let's try to investigate what the html5 css resets is trying to accomplish. We can see from the very first lines of code. It basically do this:
+
+    * {
+      margin: 0;
+      padding: 0;
+   		font-size: 100%;
+    }
+
+Ok, so we're telling the browser to set every element with zero margin and padding.
+Then, some lines after we have:
+
+    nav ul {
+    	list-style: none
+    }
+
+So, any `<ul>` inside a `<nav>` element won't have a list style.
+Later, it defines some styles for those elements:
+
+    mark, ins, del, abbr, hr, blockquote, a
+
+It sets colors, borders, font-styles, text-decoration.
+Again later, it tells the browser that all new html5 tags should be displayed as `block` elements.
+
+Let me say: this is wrong. It's an anti-pattern. I think the most common and mis-used antipattern, and, thus, it's incredible that a lot of people begin coding a stylesheet by putting this antipattern on the top of everything.
+
+What's the purpose of setting colors and decorations in a css reset? Aren't they telling something about the appearence of an element? Why are we setting those definitions at the top? And why the hell should I customize a css reset? What if I checked out the source from a git repo and then I've to change that file only to tell that, hell no, I don't want the `<mark>` element to have a `background-color: #ff9`! 
+That turns into a poor mantainability when, for example, I'll pull updates from the repo.
+
+Again, why am I setting everything to have zero margins and paddings? Chance are that in 99% of cases I'm  going to have almost no elements of a web application with zero margins and paddings. In the contrary, chances are, especially for typographic elements, that you'll end up setting almost the same margins and paddings you would have without any reset applied.
+
+So, here's what happens with css resets.
+
+1. Reset everything (plus setting some weird appeareance properties in the wrong place) 
+2. Define overrides to the reset rules
+
+So, are we resetting css only to re-reset it again later? That's crazy. Wasting of time and resources.
+
+Take this blog. 
+I've used no reset at all, neither a normalize:
+
+- I don't need to have all html5 elements to have `display: block`. I don't care about this, because I don't want this site to be compatible with older IE versions, and, even in that case, I rather added that rule only for the browser who requires it. After all, we should always care about sparing bytes and browser resources.
+- I don't need to have margins and paddings set to zero. I left default margins and paddings to almost every element and in 90% of cases I didn't need to change them.
+- I don't need and I don't want appearence rules in a css reset
+
+I propose you a little game, or an exercise. 
+Take your last project and strip out the css reset you've used.
+Then check differences with before and after. 
+Try to understand how the reset affected your stylesheet, fix it and evaluate if it's the case of avoiding using it anymore.
